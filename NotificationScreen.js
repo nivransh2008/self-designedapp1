@@ -74,14 +74,16 @@ export default class NotificationScreen extends Component{
               </View>
             )
             :(
-              <SwipeableFlatlist allNotifications={this.state.allNotifications}/>
+             <SwipeableFlatlist allNotifications={this.state.allNotifications}/>
             )
-          }
+            } 
         </View>
       </View>
+            
     )
   }
 }
+
 
 
 const styles = StyleSheet.create({

@@ -3,13 +3,15 @@ import { ImageBackground, StyleSheet, Text, View } from "react-native";
 import VegetableScreen from './Screens/VegetableScreen.js'
 import ReviewScreen from "./Screens/ReviewScreen.js";
 import {createSwitchNavigator, createAppContainer} from 'react-navigation'
+import {SafeAreaProvider} from 'react-native-safe-area-context'
+import  {AppDrawerNavigator}  from './components/AppDrawerNavigator';
 
 export default class App extends React.Component{
   render(){
     return(
-      
+      <SafeAreaProvider>
         <AppContainer/>
-    
+        </SafeAreaProvider>
       
     )  
   }
@@ -19,8 +21,9 @@ export default class App extends React.Component{
 
 
 const switchNavigator = createSwitchNavigator({
-  VegetableScreen:VegetableScreen, 
-  ReviewScreen:ReviewScreen
+  VegetableScreen:{screen:VegetableScreen}, 
+  ReviewScreen:{screen:ReviewScreen},
+  Drawer:{screen:AppDrawerNavigator}
 })
 const AppContainer = createAppContainer(switchNavigator)
 const styles = StyleSheet.create({

@@ -13,7 +13,7 @@ import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
 import firebase from "firebase";
 import db from "../config";
-
+import VegetableScreen from '../Screens/VegetableScreen'
 
 export default class CustomSideBarMenu extends Component {
   state = {
@@ -23,68 +23,68 @@ export default class CustomSideBarMenu extends Component {
     docId: "",
   };
 
-  selectPicture = async () => {
-    const { cancelled, uri } = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
+  // selectPicture = async () => {
+  //   const { cancelled, uri } = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //     allowsEditing: true,
+  //     aspect: [4, 3],
+  //     quality: 1,
+  //   });
 
-    if (!cancelled) {
-      this.uploadImage(uri, this.state.userId);
-    }
-  };
+  //   if (!cancelled) {
+  //     this.uploadImage(uri, this.state.userId);
+  //   }
+  // };
 
-  uploadImage = async (uri, imageName) => {
-    var response = await fetch(uri);
-    var blob = await response.blob();
+  // uploadImage = async (uri, imageName) => {
+  //   var response = await fetch(uri);
+  //   var blob = await response.blob();
 
-    var ref = firebase
-      .storage()
-      .ref()
-      .child("user_profiles/" + imageName);
+  //   var ref = firebase
+  //     .storage()
+  //     .ref()
+  //     .child("user_profiles/" + imageName);
 
-    return ref.put(blob).then((response) => {
-      this.fetchImage(imageName);
-    });
-  };
+  //   return ref.put(blob).then((response) => {
+  //     this.fetchImage(imageName);
+  //   });
+  // };
 
-  fetchImage = (imageName) => {
-    var storageRef = firebase
-      .storage()
-      .ref()
-      .child("user_profiles/" + imageName);
+  // fetchImage = (imageName) => {
+  //   var storageRef = firebase
+  //     .storage()
+  //     .ref()
+  //     .child("user_profiles/" + imageName);
 
-    // Get the download URL
-    storageRef
-      .getDownloadURL()
-      .then((url) => {
-        this.setState({ image: url });
-      })
-      .catch((error) => {
-        this.setState({ image: "#" });
-      });
-  };
+  //   // Get the download URL
+  //   storageRef
+  //     .getDownloadURL()
+  //     .then((url) => {
+  //       this.setState({ image: url });
+  //     })
+  //     .catch((error) => {
+  //       this.setState({ image: "#" });
+  //     });
+  // };
 
-  getUserProfile() {
-    db.collection("users")
-      .where("email_id", "==", this.state.userId)
-      .onSnapshot((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          this.setState({
-            name: doc.data().first_name + " " + doc.data().last_name,
-            docId: doc.id,
-            image: doc.data().image,
-          });
-        });
-      });
-  }
+  // getUserProfile() {
+  //   db.collection("users")
+  //     .where("email_id", "==", this.state.userId)
+  //     .onSnapshot((querySnapshot) => {
+  //       querySnapshot.forEach((doc) => {
+  //         this.setState({
+  //           name: doc.data().first_name + " " + doc.data().last_name,
+  //           docId: doc.id,
+  //           image: doc.data().image,
+  //         });
+  //       });
+  //     });
+  // }
 
-  componentDidMount() {
-    this.fetchImage(this.state.userId);
-    this.getUserProfile();
-  }
+  // componentDidMount() {
+  //   this.fetchImage(this.state.userId);
+  //   this.getUserProfile();
+  // }
 
   render() {
     return (
@@ -103,14 +103,14 @@ export default class CustomSideBarMenu extends Component {
               uri: this.state.image,
             }}
             size="medium"
-            onPress={() => this.selectPicture()}
+            // onPress={() => this.selectPicture()}
             containerStyle={styles.imageContainer}
             showEditButton
           />
 
-          <Text style={{ fontWeight: "100", fontSize: 20, paddingTop: 10 }}>
+          {/* <Text style={{ fontWeight: "100", fontSize: 20, paddingTop: 10 }}>
             {this.state.name}
-          </Text>
+          </Text> */}
         </View>
 
         <View style={styles.drawerItemsContainer}>
@@ -120,8 +120,8 @@ export default class CustomSideBarMenu extends Component {
           <TouchableOpacity
             style={styles.logOutButton}
             onPress={() => {
-              this.props.navigation.navigate("WelcomeScreen");
-              firebase.auth().signOut();
+              this.props.navigation.navigate("VegetableScreen");
+              // firebase.auth().signOut();
             }}
           >
             <Text>Log Out</Text>
